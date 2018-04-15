@@ -60,9 +60,11 @@ public class playerMovement1 : MonoBehaviour {
     {
         walking = Input.GetAxis("Vertical");
         anim.SetFloat("Walking", walking);
-        turning = Input.GetAxis("Horizontal");
-        transform.Rotate(new Vector3(0.0f, turningSpeed * turning * Time.deltaTime));
+        turning = Input.GetAxis("Horizontal") * turningSpeed;
+        turning *= Time.deltaTime;
+        transform.Translate(turning, 0, walking);
     }
+
     private void PreventStandingInLowHeadRoom()
     {
         if (!crouching)

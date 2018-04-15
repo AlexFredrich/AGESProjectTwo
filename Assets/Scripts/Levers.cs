@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Levers : MonoBehaviour {
 
+
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
