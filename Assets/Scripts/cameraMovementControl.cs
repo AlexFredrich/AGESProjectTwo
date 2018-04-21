@@ -13,6 +13,11 @@ public class cameraMovementControl : MonoBehaviour {
 
     private GameObject character;
 
+    [SerializeField]
+    string playerHorizontal;
+    [SerializeField]
+    string playerCameraVertical;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -22,7 +27,7 @@ public class cameraMovementControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        var md = new Vector2(Input.GetAxisRaw("cameraHorizontal"), Input.GetAxisRaw("cameraVertical"));
+        var md = new Vector2(Input.GetAxisRaw(playerHorizontal), Input.GetAxisRaw(playerCameraVertical));
 
         md = Vector2.Scale(md, new Vector2(sensivity * smoothing, sensivity * smoothing));
         smoothv.x = Mathf.Lerp(smoothv.x, md.x, 1f / smoothing);

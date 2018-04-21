@@ -6,27 +6,33 @@ public class playerMovement1 : MonoBehaviour {
 
     private Animator anim;
     private float walking;
-    private float turning;
     private bool crouching;
     private CapsuleCollider capsule;
-    private float capsuleHeight;
+    private float startCapsuleHeight;
     private Vector3 capsuleCenter;
     private float halfCrouch = 0.5f;
     private Rigidbody rigidbody;
 
     [SerializeField]
-    private float turningSpeed;
+    Camera playerCamera;
+    private float originalCameraHeight;
+    private float crouchCameraHeight;
+
+
+    [SerializeField]
+    private float walkingSpeed;
 
 	// Use this for initialization
 	void Start ()
     {
         anim = GetComponent<Animator>();
         walking = 0.0f;
-        turning = 0.0f;
+        
         rigidbody = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
-        capsuleHeight = capsule.height;
+       startCapsuleHeight = capsule.height;
         capsuleCenter = capsule.center;
+        originalCameraHeight = playerCamera.transform.position.y;
 	}
 	
 	// Update is called once per frame
@@ -38,18 +44,31 @@ public class playerMovement1 : MonoBehaviour {
 
     private void Crouching()
     {
-        crouching = Input.GetButton("crouch");
+        crouching = Input.GetButton("crouchP1");
         anim.SetBool("Crouching", crouching);
+        anim.SetBool("isWalking", walking == 0 ? false : true);
+
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         if (crouching)
         {
-            //if (crouching) return;
-            capsule.height = capsule.height / 2f;
-            capsule.center = capsule.center / 2f;
+            if (stateInfo.IsName("Idle2Crouch_Neutral2Crouch2Idle") || stateInfo.IsName("136_13"))
+            {
+                float colliderHeight = anim.GetFloat("colliderHeight");
+                capsule.height = startCapsuleHeight * colliderHeight;
+                crouchCameraHeight = originalCameraHeight / 2;
+                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, crouchCameraHeight, playerCamera.transform.position.z);
+                float centery = capsule.height / 2;
+
+                capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
+            }
             
         }
         else
         {
-
+            capsule.height = startCapsuleHeight;
+            float centery = capsule.height / 2;
+            playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, originalCameraHeight, playerCamera.transform.position.z);
+            capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
         }
         //ScaleCapsuleForCrouching(crouching);
         PreventStandingInLowHeadRoom();
@@ -58,11 +77,12 @@ public class playerMovement1 : MonoBehaviour {
 
     private void Movement()
     {
-        walking = Input.GetAxis("Vertical");
+        walking = Input.GetAxis("VerticalP1");
         anim.SetFloat("Walking", walking);
-        turning = Input.GetAxis("Horizontal") * turningSpeed;
-        turning *= Time.deltaTime;
-        transform.Translate(turning, 0, walking);
+
+        Vector3 movement = transform.forward * walking * walkingSpeed * Time.deltaTime;
+        rigidbody.MovePosition(rigidbody.position + movement);
+        
     }
 
     private void PreventStandingInLowHeadRoom()
@@ -70,7 +90,7 @@ public class playerMovement1 : MonoBehaviour {
         if (!crouching)
         {
             Ray crouchRay = new Ray(rigidbody.position + Vector3.up * capsule.radius * halfCrouch, Vector3.up);
-            float crouchRayLength = capsuleHeight - capsule.radius * halfCrouch;
+            float crouchRayLength = startCapsuleHeight - capsule.radius * halfCrouch;
             if (Physics.SphereCast(crouchRay, capsule.radius * halfCrouch, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
             {
                 crouching = true;
@@ -78,28 +98,5 @@ public class playerMovement1 : MonoBehaviour {
         }
     }
 
-    private void ScaleCapsuleForCrouching(bool crouch)
-    {
-        if (crouch)
-        {
-            //if (crouching) return;
-            capsule.height = capsule.height / 2f;
-            capsule.center = capsule.center / 2f;
-            crouching = true;
-        }
-        else
-        {
-            Ray crouchRay = new Ray(rigidbody.position + Vector3.up * capsule.radius * halfCrouch, Vector3.up);
-            float crouchRayLength = capsuleHeight - capsule.radius * halfCrouch;
-            if (Physics.SphereCast(crouchRay, capsule.radius * halfCrouch, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
-            {
-                crouching = true;
-                return;
-            }
-            capsule.height = capsuleHeight;
-            capsule.center = capsuleCenter;
-            crouching = false;
-        }
-    }
 
 }

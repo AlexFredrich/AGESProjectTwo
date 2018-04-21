@@ -9,11 +9,19 @@ public class PressurePlate : MonoBehaviour {
     [SerializeField]
     private int requiredMass;
 
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
+
     private void OnTriggerStay(Collider item)
     {
         //The door will only open if an item is placed on the trigger with the right mass
         if(item.tag == "Item" && item.GetComponent<Rigidbody>().mass == requiredMass)
         {
+            anim.SetBool("Triggered", true);
             //Will be replaced with a door opening animation
             Door.SetActive(false);
         }
@@ -25,6 +33,7 @@ public class PressurePlate : MonoBehaviour {
         //If the item falls of the button closes door or should it snap in to place? Close door animation
         if(item.tag == "Item")
         {
+            anim.SetBool("Triggered", false);
             Door.SetActive(true);
         }
     }
