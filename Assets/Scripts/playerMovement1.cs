@@ -12,6 +12,7 @@ public class playerMovement1 : MonoBehaviour {
     private Vector3 capsuleCenter;
     private float halfCrouch = 0.5f;
     private Rigidbody rigidbody;
+    private float turn;
 
     [SerializeField]
     Camera playerCamera;
@@ -20,13 +21,13 @@ public class playerMovement1 : MonoBehaviour {
 
 
     [SerializeField]
-    private float walkingSpeed;
+    private float walkingSpeed, turnSpeed;
 
 	// Use this for initialization
 	void Start ()
     {
         anim = GetComponent<Animator>();
-        walking = 0.0f;
+        
         
         rigidbody = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
@@ -39,6 +40,7 @@ public class playerMovement1 : MonoBehaviour {
 	void Update ()
     {
         Movement();
+        
         Crouching();
 	}
 
@@ -84,6 +86,14 @@ public class playerMovement1 : MonoBehaviour {
         rigidbody.MovePosition(rigidbody.position + movement);
         
     }
+
+    //private void Turn()
+    //{
+    //    turn = Input.GetAxis("HorizontalP1");
+    //    float turnValue = turn * turnSpeed * Time.deltaTime;
+    //    Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+    //    rigidbody.MoveRotation(rigidbody.rotation * turnRotation);
+    //}
 
     private void PreventStandingInLowHeadRoom()
     {
