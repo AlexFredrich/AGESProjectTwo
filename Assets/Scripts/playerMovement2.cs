@@ -66,8 +66,8 @@ public class playerMovement2 : MonoBehaviour
                 float colliderHeight = anim.GetFloat("colliderHeight");
                 capsule.height = startCapsuleHeight * colliderHeight;
                 float centery = capsule.height / 2;
-                crouchCameraHeight = originalCameraHeight / 2;
-                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, crouchCameraHeight, playerCamera.transform.position.z);
+                crouchCameraHeight = originalCameraHeight / 1.2f;
+                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, Mathf.Lerp(originalCameraHeight, crouchCameraHeight, .5f), playerCamera.transform.position.z);
                 capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
             }
 

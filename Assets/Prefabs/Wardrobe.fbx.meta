@@ -16,7 +16,12 @@ ModelImporter:
     3300000: Alex_Wardrobe
     4300000: Alex_Wardrobe
     6400000: Alex_Wardrobe
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alex_WardrobeMat
+    second: {fileID: 2100000, guid: 471ff60534a9d3547bc090bb0eeb8106, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

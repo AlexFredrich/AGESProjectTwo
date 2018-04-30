@@ -20,6 +20,7 @@ public class playerMovement1 : MonoBehaviour {
     private float crouchCameraHeight;
 
 
+
     [SerializeField]
     private float walkingSpeed, turnSpeed;
 
@@ -27,7 +28,7 @@ public class playerMovement1 : MonoBehaviour {
 	void Start ()
     {
         anim = GetComponent<Animator>();
-        
+
         
         rigidbody = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
@@ -57,8 +58,8 @@ public class playerMovement1 : MonoBehaviour {
             {
                 float colliderHeight = anim.GetFloat("colliderHeight");
                 capsule.height = startCapsuleHeight * colliderHeight;
-                crouchCameraHeight = originalCameraHeight / 2;
-                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, crouchCameraHeight, playerCamera.transform.position.z);
+                crouchCameraHeight = originalCameraHeight / 1.05f;
+                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, Mathf.Lerp(originalCameraHeight, crouchCameraHeight, .5f), playerCamera.transform.position.z);
                 float centery = capsule.height / 2;
 
                 capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);

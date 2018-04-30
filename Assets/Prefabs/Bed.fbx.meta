@@ -11,7 +11,12 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Alex_Bed
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alex_BedMat
+    second: {fileID: 2100000, guid: 8d4bf615cbaf7cd4fb9a67947498ef19, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

@@ -11,7 +11,12 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Alex_Chair
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alex_ChairMat
+    second: {fileID: 2100000, guid: dd67c838b6db3b646bd182dd08d0188f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

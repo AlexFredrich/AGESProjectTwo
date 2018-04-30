@@ -126,7 +126,7 @@ ModelImporter:
     - serializedVersion: 16
       name: 136_14
       takeName: 136_14
-      firstFrame: 0
+      firstFrame: 48
       lastFrame: 212
       wrapMode: 0
       orientationOffsetY: 0

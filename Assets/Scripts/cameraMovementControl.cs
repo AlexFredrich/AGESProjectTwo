@@ -34,7 +34,7 @@ public class cameraMovementControl : MonoBehaviour {
         smoothv.y = Mathf.Lerp(smoothv.y, md.y, 1f / smoothing);
         Look += smoothv;
 
-        Look.y = Mathf.Clamp(Look.y, -45f, 45f);
+        Look.y = Mathf.Clamp(Look.y, -30f, 25f);
 
         transform.localRotation = Quaternion.AngleAxis(-Look.y, Vector3.right);
         character.transform.localRotation = Quaternion.AngleAxis(Look.x, character.transform.up);
