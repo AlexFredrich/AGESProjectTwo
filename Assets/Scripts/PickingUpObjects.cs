@@ -21,7 +21,7 @@ public class PickingUpObjects : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-		if(Input.GetButton("Interact"))
+		if(Input.GetButton("PickUp"))
         {
             if(Physics.Raycast(TransformCamera.position, TransformCamera.forward, out hit, distance, RayMask))
             {
@@ -32,7 +32,7 @@ public class PickingUpObjects : MonoBehaviour
             }
         }
 
-        if(Input.GetButtonUp("Interact"))
+        if(Input.GetButton("Drop"))
         {
             RemoveTransform();
         }

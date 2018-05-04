@@ -6,6 +6,8 @@ public class Levers : MonoBehaviour {
 
     [SerializeField]
     private GameObject Door;
+    [SerializeField]
+    private GameObject Lever;
 
     private Animator anim;
 
@@ -14,7 +16,7 @@ public class Levers : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        anim = GetComponent<Animator>();
+        anim = Lever.GetComponent<Animator>();
         doorAnim = Door.GetComponent<Animator>();
 	}
 

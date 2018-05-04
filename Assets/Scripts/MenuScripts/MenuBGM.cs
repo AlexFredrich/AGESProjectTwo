@@ -14,9 +14,4 @@ public class MenuBGM : MonoBehaviour {
         audio.Play();
 	}
 	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 }

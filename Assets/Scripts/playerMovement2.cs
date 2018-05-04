@@ -19,8 +19,9 @@ public class playerMovement2 : MonoBehaviour
 
     [SerializeField]
     Camera playerCamera;
-    private float originalCameraHeight;
-    private float crouchCameraHeight;
+    [SerializeField]
+    private Transform originalCameraHeight;
+    private Transform crouchCameraHeight;
 
     // Use this for initialization
     void Start ()
@@ -33,7 +34,7 @@ public class playerMovement2 : MonoBehaviour
         startCapsuleHeight = capsule.height;
         capsuleCenter = capsule.center;
 
-        originalCameraHeight = playerCamera.transform.position.y;
+        
     }
 	
 	// Update is called once per frame
@@ -66,8 +67,8 @@ public class playerMovement2 : MonoBehaviour
                 float colliderHeight = anim.GetFloat("colliderHeight");
                 capsule.height = startCapsuleHeight * colliderHeight;
                 float centery = capsule.height / 2;
-                crouchCameraHeight = originalCameraHeight / 1.2f;
-                playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, Mathf.Lerp(originalCameraHeight, crouchCameraHeight, .5f), playerCamera.transform.position.z);
+                crouchCameraHeight.position = new Vector3(originalCameraHeight.position.x, originalCameraHeight.position.y / 1.2f, originalCameraHeight.position.z);
+                playerCamera.transform.position = Vector3.Slerp(originalCameraHeight.position, crouchCameraHeight.position, 1f * Time.deltaTime);
                 capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
             }
 
@@ -76,7 +77,7 @@ public class playerMovement2 : MonoBehaviour
         {
             capsule.height = startCapsuleHeight;
             float centery = capsule.height / 2;
-            playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, originalCameraHeight, playerCamera.transform.position.z);
+            playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, originalCameraHeight.position.y, playerCamera.transform.position.z);
             capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
         }
         //ScaleCapsuleForCrouching(crouching);
