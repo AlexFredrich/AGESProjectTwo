@@ -162,7 +162,8 @@ ModelImporter:
     400152: Spine
     400154: TongueBack
     400156: TongueTip
-    7400000: Strafe_90HipsLeftFaceFwd
+    7400000: Strafe Right
+    7400002: strafe Left
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -177,7 +178,12 @@ ModelImporter:
     optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Errors found in
+      old project file will be treated as a warnings. Configuration mis-match will
+      be ignored, but current Configuration needs to be fixed:\n\tTransform 'Pivot'
+      not found in HumanDescription.\nCopied Avatar Rig Configuration mis-match. Bone
+      length in copied configuration does not match position in animation file:\n\t'LeftLeg'
+      : position error = 7.696520 mm\n\t'LeftFoot' : position error = 15.233778 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -192,20 +198,48 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Strafe_90HipsLeftFaceFwd
+      name: Strafe Right
       takeName: _48_a_U1_M_P_Strafe_90HipsLeftFaceFwd__Fb_p90_No_0_PJ_3
-      firstFrame: 74
-      lastFrame: 634
+      firstFrame: 123
+      lastFrame: 179
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: strafe Left
+      takeName: _48_a_U1_M_P_Strafe_90HipsLeftFaceFwd__Fb_p90_No_0_PJ_3
+      firstFrame: 242
+      lastFrame: 270
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
