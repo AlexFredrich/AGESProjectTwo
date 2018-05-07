@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameStart : MonoBehaviour {
 
+    //Similar to the game end, checking for players in the zone before fading to black and in to the next scene
 
     public bool playerOneReady = false;
     public bool playerTwoReady = false;

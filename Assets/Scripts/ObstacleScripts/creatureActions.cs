@@ -5,28 +5,41 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class creatureActions : MonoBehaviour {
-
+    //The player it's hunting
     [SerializeField]
     private GameObject player;
+    //Where the creature can see
     [SerializeField]
     private Transform creatureEyes;
+    //What points the creature follows
     [SerializeField]
     private Transform[] waypoints;
+    //How long the creature should stay at the waypoints
     [SerializeField]
     private float idlingTime = 5;
+    //The camera that takes over if the player is caught
     [SerializeField]
     private GameObject deathCam;
+    //The position that camera will take
     [SerializeField]
     private Transform camPosition;
 
+    //Navmesh for the creature
     private NavMeshAgent nav;
+    //The animations
     private Animator anim;
+    //The source for the growls
     private AudioSource creatureSounds;
+    //Whether the player is alive
     private bool alive = true;
+    //The states depending on what the creature sees
     private string state = "idle";
+    //Initial spot for the way points
     private int destinationPoint = 0;
+    //For the conintuous growl
     private bool creatureGrowling = true;
 
+    //Different growls the creature makes
     [SerializeField]
     private AudioClip foundGrowl;
     [SerializeField]
@@ -46,6 +59,7 @@ public class creatureActions : MonoBehaviour {
         StartCoroutine(CreatureGrowling());
 	}
 
+    //If the player is still alive and the player enters the the eye sight area, check if the monster can see the player and react if it does
     public void CheckSight()
     {
         if(alive)
@@ -63,7 +77,7 @@ public class creatureActions : MonoBehaviour {
             }
         }
     }
-
+    //Making the creautre growl every so often
     IEnumerator CreatureGrowling()
     {
         while(creatureGrowling)
@@ -76,8 +90,10 @@ public class creatureActions : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //The creatures walk speed
         anim.SetFloat("velocity", nav.velocity.magnitude);
 
+        //If the creature is idle, find a new waypoint to walk to
         if(state == "idle")
         {
             if (waypoints.Length == 0)
@@ -90,7 +106,7 @@ public class creatureActions : MonoBehaviour {
             }
             state = "walk";
         }
-
+        //If the creature is walking, move to the destination and upon getting closer search
         if(state == "walk")
         {
             if(nav.remainingDistance <= nav.stoppingDistance && !nav.pathPending)
@@ -98,12 +114,12 @@ public class creatureActions : MonoBehaviour {
                 state = "search";
             }
         }
-
+        //Search will h=keep the creature there for a certain amount of time
         if(state == "search")
         {
             StartCoroutine(IdlePause());
         }
-
+        //If the creature sees the player, it will begin to chase them. if the player is far enough it will return to it's path
         if(state == "chase")
         {
             nav.destination = player.transform.position;
@@ -114,6 +130,7 @@ public class creatureActions : MonoBehaviour {
             {
                 state = "search";
             }
+            //If the creature catches the player it will move in to the kill state 
             else if(nav.remainingDistance <= nav.stoppingDistance + .65f && !nav.pathPending)
             {
                 if(player.GetComponent<playerLocated>().alive)
@@ -136,7 +153,7 @@ public class creatureActions : MonoBehaviour {
             }
           
         }
-
+        //Kill state invokes the kill cam and then restarts the level
         if(state == "kill")
         {
             deathCam.transform.position = Vector3.Slerp(deathCam.transform.position, camPosition.position, 10f * Time.deltaTime);
@@ -146,14 +163,14 @@ public class creatureActions : MonoBehaviour {
 
         }
 	}
-
+    //The searching wait
     IEnumerator IdlePause()
     {
         //transform.Rotate(0f, 90f * Time.deltaTime, 0f);
         yield return new WaitForSeconds(idlingTime);
         state = "idle";
     }
-
+    //Reseting the level
     private void Reset()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

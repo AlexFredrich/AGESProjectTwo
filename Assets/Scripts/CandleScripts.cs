@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CandleScripts : MonoBehaviour {
 
-    Light candle;
+    //Light component to turn on and off
+    private Light candle;
 
+    //Setting the intensity for candle flicker
     [SerializeField]
     float minIntensity;
     [SerializeField]
@@ -22,7 +24,7 @@ public class CandleScripts : MonoBehaviour {
         candle = GetComponent<Light>();
         StartCoroutine(CandleFlicker());
 	}
-
+    //The wait time between flickers that are random to stimulate a real candle
 	IEnumerator CandleFlicker()
     {
         while (true)

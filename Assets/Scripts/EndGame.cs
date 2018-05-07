@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour {
 
+    //Checks if players are in their zones
     public bool playerOneReady = false;
     public bool playerTwoReady = false;
 
+    //Panel to fade to
     [SerializeField]
     private CanvasGroup uiElement;
 
@@ -16,6 +18,7 @@ public class EndGame : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //Making sure that both players are in their zones before loading the next scene
         if(playerOneReady == true && playerTwoReady == true)
         {
             StartCoroutine(FadeCanvasGroup(uiElement, uiElement.alpha, 1));
@@ -23,7 +26,7 @@ public class EndGame : MonoBehaviour {
 	
         
 	}
-
+    //Fading to black and the load screen
     public IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float start, float end, float lerpTime = 1f)
     {
         float timeStartedLerping = Time.time;

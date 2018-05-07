@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CreditsScript : MonoBehaviour
 {
-
+    //Using buttons for the credits so that upon clicking on them brings you to the page of the asset
 
     public void BoyModel()
     {

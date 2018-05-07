@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialLever : MonoBehaviour {
 
+    //Tutorial script for the lever that opens a door, turns a light on, and moves an object so that the player can no return to the inital area and must move forward.
+
     [SerializeField]
     private GameObject Door;
     [SerializeField]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuBGM : MonoBehaviour {
-
+    //Playing the audio but in reverse.
     private AudioSource audio;
 	// Use this for initialization
 	void Start ()

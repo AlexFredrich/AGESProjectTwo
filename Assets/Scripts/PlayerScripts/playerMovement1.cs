@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMovement1 : MonoBehaviour {
+public class playerMovement1 : MonoBehaviour
+{
 
+    //Private fields
     private Animator anim;
     private float walking;
     private bool crouching;
@@ -15,6 +17,7 @@ public class playerMovement1 : MonoBehaviour {
     private float turn;
     private float strafing;
 
+    //Serialize fields
     [SerializeField]
     Camera playerCamera;
     [SerializeField]
@@ -22,17 +25,10 @@ public class playerMovement1 : MonoBehaviour {
     [SerializeField]
     private Transform crouchCameraHeight;
 
-
-
-    [SerializeField]
-    private float walkingSpeed;
-
 	// Use this for initialization
 	void Start ()
     {
         anim = GetComponent<Animator>();
-
-        
         rigidbody = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         startCapsuleHeight = capsule.height;
@@ -44,12 +40,12 @@ public class playerMovement1 : MonoBehaviour {
 	void Update ()
     {
         Movement();
-        
         Crouching();
 	}
 
     private void Crouching()
     {
+        //Checks for crouch input and if the player is walking or not
         crouching = Input.GetButton("crouchP1");
         anim.SetBool("Crouching", crouching);
         anim.SetBool("isWalking", walking == 0 ? false : true);
@@ -57,17 +53,17 @@ public class playerMovement1 : MonoBehaviour {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         if (crouching)
         {
+            //If the player is in either crouch state, half the capsule collider and move the camera down
             if (stateInfo.IsName("Idle2Crouch_Neutral2Crouch2Idle") || stateInfo.IsName("136_13"))
             {
                 float colliderHeight = anim.GetFloat("colliderHeight");
                 capsule.height = startCapsuleHeight * colliderHeight;
                 playerCamera.transform.position = crouchCameraHeight.position;
                 float centery = capsule.height / 2f;
-
                 capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
             }
-            
         }
+        //If the exit crouch, return everything to the original size and position
         else
         {
             capsule.height = startCapsuleHeight;
@@ -75,33 +71,25 @@ public class playerMovement1 : MonoBehaviour {
             playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, originalCameraHeight.position.y, playerCamera.transform.position.z);
             capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
         }
-        //ScaleCapsuleForCrouching(crouching);
+    
         PreventStandingInLowHeadRoom();
-        
     }
 
     private void Movement()
     {
+        //Getting inputs and placing them in the animator if needed
         walking = Input.GetAxis("VerticalP1");
         anim.SetFloat("Walking", walking);
         strafing = Input.GetAxis("HorizontalP1");
-
+        //Moving left and right
         Vector3 Strafing = transform.right * strafing * Time.deltaTime;
         rigidbody.MovePosition(rigidbody.position + Strafing);
         anim.SetFloat("Strafing", strafing);
-
-        Vector3 movement = transform.forward * walking * walkingSpeed * Time.deltaTime;
+        //Moving back and forth
+        Vector3 movement = transform.forward * walking * Time.deltaTime;
         rigidbody.MovePosition(rigidbody.position + movement);
         
     }
-
-    //private void Turn()
-    //{
-    //    turn = Input.GetAxis("HorizontalP1");
-    //    float turnValue = turn * turnSpeed * Time.deltaTime;
-    //    Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-    //    rigidbody.MoveRotation(rigidbody.rotation * turnRotation);
-    //}
 
     private void PreventStandingInLowHeadRoom()
     {
@@ -115,6 +103,5 @@ public class playerMovement1 : MonoBehaviour {
             }
         }
     }
-
 
 }

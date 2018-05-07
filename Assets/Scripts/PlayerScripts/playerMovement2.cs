@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerMovement2 : MonoBehaviour
 {
-
+    //Private fields
     private Animator anim;
     private float walking;
     private bool crouching;
@@ -15,9 +15,7 @@ public class playerMovement2 : MonoBehaviour
     private Rigidbody rigidbody;
     private float strafing;
 
-    [SerializeField]
-    private float walkingSpeed;
-
+    //Serialize Fields
     [SerializeField]
     Camera playerCamera;
     [SerializeField]
@@ -30,7 +28,6 @@ public class playerMovement2 : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         walking = 0.0f;
-
         rigidbody = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         startCapsuleHeight = capsule.height;
@@ -45,17 +42,22 @@ public class playerMovement2 : MonoBehaviour
         Movement();
         Crouching();
     }
+
+
     private void Movement()
     {
+        //Getting all the inputs and putting them in teh animator if necessary
         walking = Input.GetAxis("VerticalP2");
         anim.SetFloat("Walking", walking);
         strafing = Input.GetAxis("HorizontalP2");
 
+        //Moving side to side
         Vector3 Strafing = transform.right * strafing * Time.deltaTime;
         rigidbody.MovePosition(rigidbody.position + Strafing);
         anim.SetFloat("Strafing", strafing);
 
-        Vector3 movement = transform.forward * walking * walkingSpeed * Time.deltaTime;
+        //Moving forward and backwards
+        Vector3 movement = transform.forward * walking * Time.deltaTime;
         rigidbody.MovePosition(rigidbody.position + movement);
         
 
@@ -63,6 +65,7 @@ public class playerMovement2 : MonoBehaviour
 
     private void Crouching()
     {
+        //Checking for the crouch input, it needs to be held down. Also checks if the player is moving
         crouching = Input.GetButton("crouchP2");
         anim.SetBool("Crouching", crouching);
         anim.SetBool("isWalking", walking == 0 ? false : true);
@@ -70,17 +73,17 @@ public class playerMovement2 : MonoBehaviour
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         if (crouching)
         {
+            //If the player is in either crouch state, half the capsule trigger and move the camera to match the crouch
             if (stateInfo.IsName("Idle2Crouch_Neutral2Crouch2Idle") || stateInfo.IsName("136_14"))
             {
                 float colliderHeight = anim.GetFloat("colliderHeight");
                 capsule.height = startCapsuleHeight * colliderHeight;
-               // playerCamera.transform.position = Vector3.Lerp(originalCameraHeight.position, crouchCameraHeight.position, 1f * Time.deltaTime);
                 playerCamera.transform.position = crouchCameraHeight.position;
                 float centery = capsule.height / 2.2f;
                 capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
             }
-
         }
+        //If they aren't crouching, return everything to normal
         else
         {
             capsule.height = startCapsuleHeight;
@@ -88,9 +91,7 @@ public class playerMovement2 : MonoBehaviour
             playerCamera.transform.position = new Vector3(playerCamera.transform.position.x, originalCameraHeight.position.y, playerCamera.transform.position.z);
             capsule.center = new Vector3(capsule.center.x, centery, capsule.center.z);
         }
-        //ScaleCapsuleForCrouching(crouching);
         PreventStandingInLowHeadRoom();
-
     }
 
     private void PreventStandingInLowHeadRoom()

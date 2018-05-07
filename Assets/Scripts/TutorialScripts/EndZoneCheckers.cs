@@ -11,6 +11,8 @@ public class EndZoneCheckers : MonoBehaviour {
     [SerializeField]
     private GameObject gameStart;
 
+    //If the players have entered their respective zones in the tutorial area, it turns on a light and marks their ready status as true and false if they leave the zone.
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.name == "Male")

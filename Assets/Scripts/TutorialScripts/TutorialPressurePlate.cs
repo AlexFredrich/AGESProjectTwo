@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialPressurePlate : MonoBehaviour {
 
+    //Tutorial script of the pressure plates that allows players to place an object on the plate and then turn a corresponding light on
+
     [SerializeField]
     private GameObject Door;
     [SerializeField]
@@ -27,7 +29,7 @@ public class TutorialPressurePlate : MonoBehaviour {
         if (item.tag == "Item" && item.GetComponent<Rigidbody>().mass == requiredMass)
         {
             anim.SetBool("Triggered", true);
-            //Will be replaced with a door opening animation
+            
             doorAnim.SetBool("opened", true);
             lightbulb.GetComponent<Light>().enabled = true;
         }

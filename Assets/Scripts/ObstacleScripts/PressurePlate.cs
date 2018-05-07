@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PressurePlate : MonoBehaviour {
 
+
+
     [SerializeField]
     private GameObject Door;
     [SerializeField]
@@ -20,7 +22,7 @@ public class PressurePlate : MonoBehaviour {
         anim = GetComponent<Animator>();
         doorAnim = Door.GetComponent<Animator>();
     }
-
+    //Checks to see if the mass is the same as the required and then opens a door and turns on it's light
     private void OnTriggerEnter(Collider item)
     {
         //The door will only open if an item is placed on the trigger with the right mass

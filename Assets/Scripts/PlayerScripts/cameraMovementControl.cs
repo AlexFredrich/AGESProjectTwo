@@ -27,13 +27,14 @@ public class cameraMovementControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //Allowing the player to move the camera up and down, left and right, with the controller
         var md = new Vector2(Input.GetAxisRaw(playerCameraHorizontal), Input.GetAxisRaw(playerCameraVertical));
 
         md = Vector2.Scale(md, new Vector2(sensivity * smoothing, sensivity * smoothing));
         smoothv.x = Mathf.Lerp(smoothv.x, md.x, 1f / smoothing);
         smoothv.y = Mathf.Lerp(smoothv.y, md.y, 1f / smoothing);
         Look += smoothv;
-
+        //Limiting the camera up and down so that the player doesn't go to far in either way
         Look.y = Mathf.Clamp(Look.y, -30f, 25f);
 
         transform.localRotation = Quaternion.AngleAxis(-Look.y, Vector3.right);

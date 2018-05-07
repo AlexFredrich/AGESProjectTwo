@@ -8,6 +8,7 @@ using System;
 
 public class MenuFunctionality : MonoBehaviour
 {
+    //UI Elements
     [SerializeField]
     private GameObject MainOptions, Credits;
     [SerializeField]
@@ -17,13 +18,15 @@ public class MenuFunctionality : MonoBehaviour
     [SerializeField]
     private Slider progressBarSlider;
 
-    private bool done = false;
+    //Next scene
     private static string sceneToLoad;
 
+    //Making sure that the controller navigation works
     [SerializeField]
     EventSystem eventSystem;
     private GameObject storeSelcted;
 
+    //Starting the game that brings the loading screen up and then loads the next level
     public void StartGame(string nameOfSceneToLoad)
     {
 
@@ -32,7 +35,7 @@ public class MenuFunctionality : MonoBehaviour
         storeSelcted = eventSystem.firstSelectedGameObject;
     }
 
-
+    //Returning to the menu from the credits screen
     public void ReturnToMenu()
     {
         MainOptions.SetActive(true);
@@ -41,6 +44,7 @@ public class MenuFunctionality : MonoBehaviour
         
     }
 
+    //Bringing up the credits screen and making sure controller navigation works
     public void CreditsScreen()
     {
         MainOptions.SetActive(false);
@@ -48,11 +52,13 @@ public class MenuFunctionality : MonoBehaviour
         eventSystem.SetSelectedGameObject(returnButton);
     }
 
+    //Exiting the game
     public void ExitGame()
     {
         Application.Quit();
     }
 
+    //If you use the mouse, the controllers will still work
     private void Update()
     {
         if(eventSystem.currentSelectedGameObject != storeSelcted)
@@ -64,6 +70,7 @@ public class MenuFunctionality : MonoBehaviour
         }
     }
 
+    //Fading to a black screen
     public IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float start, float end, float lerpTime = 1f)
     {
         float timeStartedLerping = Time.time;
@@ -81,7 +88,7 @@ public class MenuFunctionality : MonoBehaviour
 
             if (percentageComple >= 1)
             {
-                // done = true;
+                
                 StartCoroutine(LoadSceneAsync(sceneToLoad));
                 break;
             }
@@ -90,6 +97,7 @@ public class MenuFunctionality : MonoBehaviour
         }
     }
 
+    //Loading the next level
     private IEnumerator LoadSceneAsync(string sceneName)
     {
         yield return new WaitForSeconds(0.1f);

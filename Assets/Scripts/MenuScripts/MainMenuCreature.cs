@@ -22,7 +22,7 @@ public class MainMenuCreature : MonoBehaviour {
         StartCoroutine(CreatureGrowl());
 	}
 	
-
+    //Regulates between to types of growls after 3 seconds
     IEnumerator CreatureGrowl()
     {
         while(keepPlaying)
